@@ -1,0 +1,17 @@
+{
+    "name": null,
+    "input_variables": [
+        "input_length",
+        "input_style",
+        "paper_input"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "\nYou are an expert in Generative AI and NLP research papers.\n\nYour task is to explain the paper titled \"{paper_input}\".\n\nThe explanation should be:\n- Styled as \"{input_style}\"\n- With a length of \"{input_length}\"\n\nBe clear, accurate, and focused on delivering value to the reader.\n\nUse real examples, analogies, equations, or code where needed depending on the style.\n\nAvoid unnecessary jargon unless it fits the selected style.\n\nStart the explanation now.\n",
+    "template_format": "f-string",
+    "validate_template": true,
+    "_type": "prompt"
+}
