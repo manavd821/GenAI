@@ -1,1 +1,0 @@
-print('hare krsna')
