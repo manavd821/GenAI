@@ -14,17 +14,17 @@ llm = ChatGoogleGenerativeAI(model='gemini-2.0-flash')
 
 
 # Single static messges
-# temp1 = PromptTemplate.from_template(template='Explain {var1} and {var2} in few words.').format(var1 = 'val1', var2 = 'val2')
-# print(temp1)
+temp1 = PromptTemplate.from_template(template='Explain {var1} and {var2} in few words.').format(var1 = 'val1', var2 = 'val2')
+print(temp1)
 
-# temp2 = PromptTemplate.from_template(template='Explain {var1} and {var2} in few words.').invoke({'var1' : 'val1', 'var2' : 'val2'})
-# print(temp2)
+temp2 = PromptTemplate.from_template(template='Explain {var1} and {var2} in few words.').invoke({'var1' : 'val1', 'var2' : 'val2'})
+print(temp2)
 
-# temp3 = PromptTemplate(template='Explain about {var3} and {var4} in few words', input_variables=['var3','var4'], validate_template=True).format(var3='val3', var4 = 'val4')
-# print(temp3)
+temp3 = PromptTemplate(template='Explain about {var3} and {var4} in few words', input_variables=['var3','var4'], validate_template=True).format(var3='val3', var4 = 'val4')
+print(temp3)
 
-# temp4 = PromptTemplate(template='Explain about {var3} and {var4} in few words', input_variables=['var3','var4'], validate_template=True).invoke({'var3':'val3', 'var4' : 'val4'})
-# print(temp4)
+temp4 = PromptTemplate(template='Explain about {var3} and {var4} in few words', input_variables=['var3','var4'], validate_template=True).invoke({'var3':'val3', 'var4' : 'val4'})
+print(temp4)
 
 # # multi static messages history
 # # re = llm.invoke(input=[SystemMessage(content='You are a proffesional doctor'), HumanMessage(content='My leg is paining, help me in few words.')])
@@ -108,19 +108,19 @@ llm = ChatGoogleGenerativeAI(model='gemini-2.0-flash')
 # print(msgTemp2)
 
 # fetch chat history from another file(used in DB interactions) => Alternative of msgTemp2
-chat_template = ChatPromptTemplate([
-    ("system", "You are a mathematics teacher."),
-    MessagesPlaceholder(variable_name='chat_history_in_file'),
-    ("human", "{query}")
-])
-chat_history_in_file = []
-# load chat history from file
-with open('chat_history.txt') as f:
-    chat_history_in_file.extend(f.readlines())
-# print('chat_history_in_file: ',chat_history_in_file)
+# chat_template = ChatPromptTemplate([
+#     ("system", "You are a mathematics teacher."),
+#     MessagesPlaceholder(variable_name='chat_history_in_file'),
+#     ("human", "{query}")
+# ])
+# chat_history_in_file = []
+# # load chat history from file
+# with open('chat_history.txt') as f:
+#     chat_history_in_file.extend(f.readlines())
+# # print('chat_history_in_file: ',chat_history_in_file)
 
-msgTemp3 = chat_template.invoke({
-    'chat_history_in_file' : chat_history_in_file,
-    'query' : 'Now, multiply that by 4'
-})
-print(msgTemp3)
+# msgTemp3 = chat_template.invoke({
+#     'chat_history_in_file' : chat_history_in_file,
+#     'query' : 'Now, multiply that by 4'
+# })
+# print(msgTemp3)
