@@ -20,7 +20,7 @@ class Review(BaseModel):
 
 structured_model = llm.with_structured_output(Review)
 
-result = structured_model.invoke('''
+text = '''
 Artificial Intelligence (AI) has transformed how we interact with technology, offering solutions that were once considered science fiction. It powers everything from virtual assistants and personalized recommendations to advanced tools in healthcare, finance, and education. AI systems can process massive amounts of data quickly, identify patterns, and make decisions faster and more accurately than humans in many scenarios. This has led to increased efficiency, automation of repetitive tasks, and innovation across nearly every industry. For example, AI-driven diagnostics in medicine have helped detect diseases earlier, while predictive maintenance in manufacturing has reduced downtime and costs.
 
 However, the rapid expansion of AI comes with serious downsides. One major concern is the displacement of human jobs, especially in industries dependent on routine labor. As companies adopt AI to cut costs, many workers face unemployment or the need for re-skilling. Furthermore, AI can inherit biases from the data it is trained on, leading to unfair outcomes in sensitive areas like hiring, policing, or lending. Privacy is another significant issue—AI technologies used in surveillance, facial recognition, or data tracking can be misused to violate individual freedoms. The lack of transparency in how some AI models make decisions also makes it difficult to hold anyone accountable when things go wrong.
@@ -48,7 +48,9 @@ Lack of transparency and accountability
 Potential misuse in surveillance and warfare
 
 Reviewed by Manav Desai
-''')
+'''
+
+result = structured_model.invoke(input=text)
 print(result)
 # print(type(result))
 # result_dict = result.model_dump()
@@ -56,6 +58,12 @@ print(result)
 # print(result)
 # result_json = result.model_dump_json()
 # print(type(result_json))
+# print('key themes: ', result.key_themes, end='\n\n')
+# print('sentiment: ', result.sentiment, end='\n\n')
+# print('summary: ', result.summary, end='\n\n')
+# print('pros: ', result.pros, end='\n\n')
+# print('cons: ', result.cons, end='\n\n')
+# print('author name: ', result.cons, end='\n\n')
 
 
 
