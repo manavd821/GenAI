@@ -1,6 +1,7 @@
-from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate, ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate, ChatPromptTemplate, MessagesPlaceholder, FewShotPromptWithTemplates
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from langchain.memory import ConversationBufferMemory
+from langchain_core.output_parsers import StrOutputParser
 from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
 load_dotenv()
@@ -14,22 +15,26 @@ llm = ChatGoogleGenerativeAI(model='gemini-2.0-flash')
 
 
 # Single static messges
-temp1 = PromptTemplate.from_template(template='Explain {var1} and {var2} in few words.').format(var1 = 'val1', var2 = 'val2')
-print(temp1)
+# temp1 = PromptTemplate.from_template(template='Explain {var1} and {var2} in few words.').format(var1 = 'val1', var2 = 'val2')
+# print(temp1)
 
-temp2 = PromptTemplate.from_template(template='Explain {var1} and {var2} in few words.').invoke({'var1' : 'val1', 'var2' : 'val2'})
-print(temp2)
+# temp2 = PromptTemplate.from_template(template='Explain {var1} and {var2} in few words.').invoke({'var1' : 'val1', 'var2' : 'val2'})
+# print(temp2)
 
-temp3 = PromptTemplate(template='Explain about {var3} and {var4} in few words', input_variables=['var3','var4'], validate_template=True).format(var3='val3', var4 = 'val4')
-print(temp3)
+# temp3 = PromptTemplate(template='Explain about {var3} and {var4} in detail', input_variables=['var3','var4'], validate_template=True).format(var3='array', var4 = 'string')
+# print(temp3)
+# Stream
+# for chunk in llm.stream(temp3):
+#     print(chunk.content.replace('*',''), end='')
 
-temp4 = PromptTemplate(template='Explain about {var3} and {var4} in few words', input_variables=['var3','var4'], validate_template=True).invoke({'var3':'val3', 'var4' : 'val4'})
-print(temp4)
+# temp4 = PromptTemplate(template='Explain about {var3} and {var4} in few words', input_variables=['var3','var4'], validate_template=True).invoke({'var3':'val3', 'var4' : 'val4'})
+# print(temp4)
 
-# # multi static messages history
-# # re = llm.invoke(input=[SystemMessage(content='You are a proffesional doctor'), HumanMessage(content='My leg is paining, help me in few words.')])
-# # print(re.content)
-# # AIMessage(content=re.content)
+# # multi static messages history(MEssages)
+# re = llm.invoke(input=[SystemMessage(content='You are a helpful assistant. Your name is Bob'), HumanMessage(content='Hare Krsna, what is your name?')])
+# print(re.content)
+# AIMessage(content=re.content)
+# print(re.usage_metadata)
 
 
 # # Single Dynamic messages
@@ -47,6 +52,36 @@ print(temp4)
 #     input_variables = ['user question']
 # ).format(user_question = 'What is Deep learning?')
 # print('\n',final_prompt)
+# print(llm.invoke(final_prompt).content)
+
+# more-flexible fewshort-...
+# parser = StrOutputParser()
+# examples = [
+#     {"question": "Capital of France?", "answer": "Paris"},
+#     {"question": "Capital of Japan?", "answer": "Tokyo"}
+# ]
+# exmaple_prompt = PromptTemplate(
+#     template='Q: {question}\n A: {answer}',
+#     input_variables=['question', 'answer'],
+#     validate_template=True
+# )
+# final_prompt = FewShotPromptWithTemplates(
+#     examples=examples,
+#     example_prompt=exmaple_prompt,
+#     prefix= PromptTemplate(
+#         template='You are helpful {role}',
+#         input_variables=['role']
+#     ),
+#     suffix= PromptTemplate(
+#         template='Q: {question}',
+#         input_variables=['question']
+#     ),
+#     input_variables=['role','question']
+# )
+# print(final_prompt.format(role = 'assistant', question = 'What is capital of India?'))
+# chain = final_prompt | llm | parser
+# print(chain.invoke({'role':'assistant','question' : 'What is capital of India?' }))
+
 
 # multi - messages history
 # chTemp1 = ChatPromptTemplate([
@@ -94,17 +129,17 @@ print(temp4)
 # print(msgTemp2)
 
 
-# msgTemp2 = ChatPromptTemplate([
-#     ("system", "You are a mathematics teacher."),
-#     MessagesPlaceholder(variable_name='chat_history'),
-#     ("human", "{queary}")
-# ]).invoke({
-#     'chat_history': [
-#         ("human", "what's 5 + 2"),
-#         ("ai", "5 + 2 is 7")
-#     ],
-#     'queary' :  'Now, multiply that by 4'
-# })
+msgTemp2 = ChatPromptTemplate([
+    ("system", "You are a mathematics teacher."),
+    MessagesPlaceholder(variable_name='chat_history'),
+    ("human", "{queary}")
+]).invoke({
+    'chat_history': [
+        ("human", "what's 5 + 2"),
+        ("ai", "5 + 2 is 7")
+    ],
+    'queary' :  'Now, multiply that by 4'
+})
 # print(msgTemp2)
 
 # fetch chat history from another file(used in DB interactions) => Alternative of msgTemp2
