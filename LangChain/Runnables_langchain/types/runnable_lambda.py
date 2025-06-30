@@ -19,8 +19,12 @@ parallel_chain = RunnableParallel({
     'joke' : RunnablePassthrough(),
     'count' : RunnableLambda(lambda x: len(x.strip().replace('\n','').split()))
 })
-final_chain = joke_generator | parallel_chain
-result = final_chain.invoke({'topic' : 'AI'})
-print(result)
-print('Joke: ',result['joke'])
-print('Word Count: ',result['count'])
+# final_chain = joke_generator | parallel_chain
+# result = final_chain.invoke({'topic' : 'AI'})
+# print(result)
+# print('Joke: ',result['joke'])
+# print('Word Count: ',result['count'])
+
+# another example
+runnable = RunnableLambda(lambda x : x+1)
+print(runnable.invoke(1))

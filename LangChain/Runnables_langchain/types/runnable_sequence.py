@@ -13,8 +13,9 @@ prompt = PromptTemplate(
 )
 parser = StrOutputParser()
 prompt2 = PromptTemplate(
-    template='Roast the joke based on its humor level.\nJoke: {joke}',
-    input_variables=['joke']
+    template='Roast the joke based on its humor level in {number_of_lines}.\nJoke: {joke}',
+    input_variables=['joke'],
+    partial_variables={'number_of_lines' : '1 line'}
 )
 # chain = prompt | llm2 | parser | prompt2 | llm1 | parser
 chain = RunnableSequence(prompt, llm2, parser, prompt2, llm1, parser)

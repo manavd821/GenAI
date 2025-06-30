@@ -18,7 +18,14 @@ parser = StrOutputParser()
 
 chain = prompt1 | llm | parser | prompt2 | llm | parser
 
-result = chain.invoke({'topic' : 'Attension all you need'})
+# result = chain.invoke({'topic' : 'Attension all you need'})
 # print(result)
 
 chain.get_graph().print_ascii()
+
+# print('get_config_jsonschema: ',chain.get_config_jsonschema(), end='\n\n')
+# print('config_schema: ',chain.config_schema(), end='\n\n')
+# print('get_output_jsonschema: ', chain.get_output_jsonschema(), end='\n\n')
+# print('get_input_jsonschema: ', chain.get_input_jsonschema(), end='\n\n')
+# print('get_input_schema: ', chain.get_input_schema(), end='\n\n')
+# print('input_schema: ', chain.input_schema, end='\n\n')
