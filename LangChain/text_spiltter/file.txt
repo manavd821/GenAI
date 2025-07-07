@@ -1,0 +1,5 @@
+Text splitting breaks big docs into smaller parts for LLMs to process efficiently.
+You need it for RAG, summarization, and token-safe generation.
+
+LangChain uses RecursiveCharacterTextSplitter as its default.
+Choose splitter based on text structure, LLM limits, and use case.
